@@ -1,0 +1,18 @@
+services:
+  challenge:
+    build: .
+    environment:
+      FLAG_PATH: /run/secrets/ctf_flag
+      PORT: 5000
+      INTERNAL_PORT: 5001
+    ports:
+      - "127.0.0.1:35006:5000"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 128m
+    volumes:
+      - ./flag.txt:/run/secrets/ctf_flag:ro

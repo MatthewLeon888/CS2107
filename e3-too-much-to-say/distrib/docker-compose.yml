@@ -1,0 +1,17 @@
+services:
+  challenge:
+    platform: linux/amd64
+    build: .
+    environment:
+      FLAG_PATH: /run/secrets/ctf_flag
+    ports:
+      - "127.0.0.1:35007:5000"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 128m
+    volumes:
+      - ./flag.txt:/run/secrets/ctf_flag:ro
